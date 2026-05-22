@@ -32,7 +32,7 @@ export function renderCharModal() {
         div.className = 'char-item';
         div.onclick = () => selectCharacter(c.id);
         const fallbackImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><rect width='50' height='50' fill='%23333'/></svg>";
-        div.innerHTML = `<img src="${c.image}" alt="${c.name}" onerror="this.src='${fallbackImg}'"><span>${c.name}</span>`;
+        div.innerHTML = `<!-- <img src="${c.image}" alt="${c.name}" onerror="this.src='${fallbackImg}'"> --><span>${c.name}</span>`;
         grid.appendChild(div);
     });
 }
@@ -45,7 +45,8 @@ function selectCharacter(charId) {
     document.getElementById('selectedBaseCharName').value = charInfo.name;
     document.getElementById('selectedBaseCharImage').value = charInfo.image || "";
     
-    document.getElementById('previewCharImg').src = charInfo.image;
+    // 画像読み込みを無効化（コメントアウト）
+    // document.getElementById('previewCharImg').src = charInfo.image;
     document.getElementById('previewCharName').innerText = charInfo.name;
     document.getElementById('openCharModalBtn').style.display = 'none';
     document.getElementById('selectedCharPreview').style.display = 'flex';
@@ -104,6 +105,94 @@ export function updateVisuals() {
         const btnT = document.getElementById('char_target_' + stat.id);
         if(btnT) btnT.classList.toggle('target-active', state.charSelectedTargets.includes(stat.id));
     });
+}
+
+// 各種ボタン（サブステ・セット・メイン選択・狙いサブステ）を描画する
+export function renderStatGrids() {
+    // 現在のサブステ選択グリッド
+    const currentGrid = document.getElementById('currentGrid');
+    if (currentGrid) {
+        currentGrid.innerHTML = '';
+        subStats.forEach(stat => {
+            const btn = document.createElement('div');
+            btn.className = 'stat-btn';
+            btn.id = 'current_' + stat.id;
+            btn.innerText = stat.name;
+            btn.onclick = () => toggleArray('selectedCurrents', stat.id, 4);
+            currentGrid.appendChild(btn);
+        });
+    }
+
+    // キャラの適正ディスクセットグリッド
+    const setsGrid = document.getElementById('charSetsGrid');
+    if (setsGrid) {
+        setsGrid.innerHTML = '';
+        state.allSets.forEach((s, idx) => {
+            const btn = document.createElement('div');
+            btn.className = 'stat-btn';
+            btn.id = 'char_set_' + idx;
+            btn.innerText = s;
+            btn.onclick = () => toggleArray('charSelectedSets', s, 0);
+            setsGrid.appendChild(btn);
+        });
+    }
+
+    // 各部位の理想メインステグリッド
+    const main4 = document.getElementById('charMain4Grid');
+    if (main4) {
+        main4.innerHTML = '';
+        (discMainStats[4] || []).forEach(s => {
+            const btn = document.createElement('div');
+            btn.className = 'stat-btn';
+            btn.id = 'char_main4_' + s.id;
+            btn.innerText = s.name;
+            btn.onclick = () => toggleArray('charSelectedMain4', s.id, 0);
+            main4.appendChild(btn);
+        });
+    }
+
+    const main5 = document.getElementById('charMain5Grid');
+    if (main5) {
+        main5.innerHTML = '';
+        (discMainStats[5] || []).forEach(s => {
+            const btn = document.createElement('div');
+            btn.className = 'stat-btn';
+            btn.id = 'char_main5_' + s.id;
+            btn.innerText = s.name;
+            btn.onclick = () => toggleArray('charSelectedMain5', s.id, 0);
+            main5.appendChild(btn);
+        });
+    }
+
+    const main6 = document.getElementById('charMain6Grid');
+    if (main6) {
+        main6.innerHTML = '';
+        (discMainStats[6] || []).forEach(s => {
+            const btn = document.createElement('div');
+            btn.className = 'stat-btn';
+            btn.id = 'char_main6_' + s.id;
+            btn.innerText = s.name;
+            btn.onclick = () => toggleArray('charSelectedMain6', s.id, 0);
+            main6.appendChild(btn);
+        });
+    }
+
+    // キャラの狙いサブステグリッド
+    const targetGrid = document.getElementById('charTargetGrid');
+    if (targetGrid) {
+        targetGrid.innerHTML = '';
+        subStats.forEach(stat => {
+            const btn = document.createElement('div');
+            btn.className = 'stat-btn';
+            btn.id = 'char_target_' + stat.id;
+            btn.innerText = stat.name;
+            btn.onclick = () => toggleArray('charSelectedTargets', stat.id, 4);
+            targetGrid.appendChild(btn);
+        });
+    }
+
+    // 生成後に現在の状態を反映
+    updateVisuals();
 }
 
 export function updateMainStats() {
@@ -180,7 +269,7 @@ export function renderCharList() {
 }
 
 export function renderMismatchCard(char, idealNames, container) {
-    const imgHTML = char.image ? `<img src="${char.image}" class="char-icon" onerror="this.style.display='none'">` : '';
+    const imgHTML = char.image ? `<!-- <img src="${char.image}" class="char-icon" onerror="this.style.display='none'"> -->` : '';
     container.innerHTML += `<div class="char-card" style="border-left-color: #7f1d1d;"><div class="char-card-title"><div class="char-title-container">${imgHTML}<span>${char.name} 用の判定</span></div></div><div class="advice-box advice-trash-hard">【メイン不一致のため即分解推奨】<br><span style="font-size:12px; font-weight:normal;">理想のメインステータス: <strong>${idealNames}</strong></span></div></div>`;
 }
 
@@ -195,7 +284,7 @@ export function renderPredictCard(char, validTargets, initial, currentHits, unac
     else if (currentHits === 1) advice = { class: "advice-roll-low", text: (initial === 4) ? "【Lv6まで様子見】当たり1つなので渋め。" : "【Lv3〜6まで様子見】Lv3で追加されるか、Lv6までに強化されれば続行です。" };
 
     const targetLabels = validTargets.map(t => subStats.find(s => s.id === t)?.name).map(n => `<span>${n}</span>`).join('');
-    const imgHTML = char.image ? `<img src="${char.image}" class="char-icon" onerror="this.style.display='none'">` : '';
+    const imgHTML = char.image ? `<!-- <img src="${char.image}" class="char-icon" onerror="this.style.display='none'"> -->` : '';
     
     let html = `<div class="char-card"><div class="char-card-title"><div class="char-title-container">${imgHTML}<span>${char.name} 用の判定</span></div></div><div class="char-targets">狙い: ${targetLabels || '<span>なし(メイン被り等)</span>'}</div><div class="advice-box ${advice.class}">${advice.text}</div><div style="background: #111; padding: 10px; border-radius: 5px;">`;
 
@@ -225,7 +314,7 @@ export function renderFinishedCard(char, validTargets, totalScore, baseScore, up
     else advice = { class: "advice-trash-hard", text: "【エサ推奨】実用レベルに達していません。他のディスクの強化素材にしましょう。" };
 
     const targetLabels = validTargets.map(t => subStats.find(s => s.id === t)?.name).map(n => `<span>${n}</span>`).join('');
-    const imgHTML = char.image ? `<img src="${char.image}" class="char-icon" onerror="this.style.display='none'">` : '';
+    const imgHTML = char.image ? `<!-- <img src="${char.image}" class="char-icon" onerror="this.style.display='none'"> -->` : '';
 
     container.innerHTML += `
     <div class="char-card">

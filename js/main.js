@@ -27,6 +27,7 @@ async function init() {
     });
 
     ui.renderCharModal();
+    ui.renderStatGrids();
     ui.updateMainStats();
     ui.renderCharList();
     ui.updateVisuals();
