@@ -1,0 +1,100 @@
+body { font-family: 'Segoe UI', Meiryo, sans-serif; background-color: #161616; color: #f0f0f0; margin: 0; padding: 20px; }
+/* 全体幅を2カラム用に拡張 */
+.container { max-width: 1100px; margin: 0 auto; background-color: #242424; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.8); overflow: hidden; }
+.tab-menu { display: flex; background-color: #1a1a1a; border-bottom: 3px solid #333; }
+.tab-btn { flex: 1; padding: 15px; background: none; border: none; color: #888; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+.tab-btn:hover { color: #fff; background-color: #2a2a2a; }
+.tab-btn.active { color: #00ffaa; border-bottom: 3px solid #00ffaa; background-color: #242424; margin-bottom: -3px; }
+.tab-content { padding: 25px; display: none; }
+.tab-content.active { display: block; }
+
+/* キャラ登録画面は横に広がりすぎないよう制限 */
+#tab-chars { max-width: 650px; margin: 0 auto; }
+
+h1 { font-size: 20px; text-align: center; color: #00ffaa; margin-top: 0; margin-bottom: 25px; letter-spacing: 1px; }
+.form-group { margin-bottom: 20px; background: #1c1c1c; padding: 15px; border-radius: 8px; border: 1px solid #333; }
+.form-group-title { font-size: 16px; color: #ffd700; border-bottom: 1px solid #444; padding-bottom: 8px; margin-bottom: 12px; font-weight: bold; }
+label { display: block; margin-bottom: 10px; font-weight: bold; font-size: 14px; color: #eee; }
+input[type="text"], select { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #555; background-color: #111; color: #fff; font-size: 15px; cursor: pointer; box-sizing: border-box; }
+.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.stat-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.stat-btn { padding: 10px; background-color: #2a2a2a; color: #aaa; border: 1px solid #444; border-radius: 6px; font-size: 13px; cursor: pointer; transition: 0.2s; text-align: center; user-select: none; }
+.stat-btn:hover:not(.disabled) { background-color: #3a3a3a; }
+.current-active { background-color: #103a20; color: #00ffaa; border-color: #00ffaa; font-weight: bold; }
+.target-active { background-color: #4a3a10; color: #ffd700; border-color: #ffd700; font-weight: bold; }
+.disabled { opacity: 0.3; cursor: not-allowed; background-color: #111; border-color: #222; }
+
+/* 2カラムレイアウト用スタイル */
+.calc-wrapper { display: flex; gap: 25px; align-items: flex-start; }
+.calc-left { flex: 1; min-width: 320px; }
+.calc-right { flex: 1.2; min-width: 320px; background: #1a1a1a; padding: 20px; border-radius: 8px; border: 1px solid #333; min-height: 480px; box-sizing: border-box; }
+.result-placeholder { text-align: center; color: #666; padding-top: 180px; font-weight: bold; font-size: 14px; line-height: 1.6; }
+
+.btn-select-char { width: 100%; padding: 15px; background-color: #3b82f6; color: #fff; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+.btn-select-char:hover { background-color: #60a5fa; }
+.btn-calc { width: 100%; padding: 15px; background-color: #00ffaa; color: #111; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+.btn-calc:hover { background-color: #33ffbb; transform: translateY(-2px); }
+.btn-save { width: 100%; padding: 12px; background-color: #ffd700; color: #111; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+.btn-save:hover { background-color: #ffe033; }
+
+.char-card { background: #242424; border: 1px solid #444; border-radius: 8px; padding: 15px; margin-bottom: 20px; border-left: 5px solid #00ffaa; }
+.char-card-title { font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 8px; }
+.char-title-container { display: flex; align-items: center; gap: 10px; }
+.char-icon { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #333; background: #222; }
+.char-targets { font-size: 13px; color: #aaa; margin-bottom: 10px; line-height: 1.6; }
+.char-targets span { display: inline-block; background: #333; padding: 3px 8px; border-radius: 4px; margin-right: 5px; margin-bottom: 5px; color: #ffd700;}
+/* --- ▼ ここから差し替え ▼ --- */
+.advice-box { padding: 12px; border-radius: 6px; margin-bottom: 15px; font-weight: bold; font-size: 14px; line-height: 1.5; text-align: center; }
+
+/* 🥇 Sランク：神ディスク（金） */
+.advice-god { background-color: #382902; border: 2px solid #fbbf24; color: #fef3c7; box-shadow: 0 0 10px rgba(251, 191, 36, 0.2); }
+/* 🥈 Aランク：様子見・有望（青） */
+.advice-roll-high { background-color: #0c4a6e; border: 2px solid #38bdf8; color: #e0f2fe; }
+/* 🥉 Bランク：様子見・渋め（オレンジ） */
+.advice-roll-low { background-color: #422006; border: 2px solid #f97316; color: #ffedd5; }
+/* 🗑️ Cランク：基本分解（薄い赤） */
+.advice-trash-soft { background-color: #450a0a; border: 2px solid #ef4444; color: #fee2e2; }
+/* 💀 Dランク：即分解（濃い赤） */
+.advice-trash-hard { background-color: #1a0505; border: 2px solid #7f1d1d; color: #f87171; }
+/* --- ▲ ここまで差し替え ▲ --- */
+.result-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 15px; border-bottom: 1px dashed #444; padding-bottom: 4px;}
+.result-item:last-child { border-bottom: none; }
+.highlight { color: #00ffaa; font-weight: bold; font-size: 16px; }
+.char-list-item { background: #1c1c1c; border: 1px solid #333; padding: 12px; border-radius: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+.char-list-info { font-size: 14px; line-height: 1.5; }
+.char-list-sets { color: #00ffaa; font-size: 12px; margin-top: 4px; }
+.char-list-mains { color: #aaa; font-size: 11px; margin-top: 2px; }
+.no-match-msg { text-align: center; padding: 20px; color: #f87171; font-weight: bold; background: #381b1b; border-radius: 8px; }
+.note { font-size: 12px; color: #888; margin-top: 10px; line-height: 1.5;}
+
+/* モーダル関連 */
+.modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(3px); }
+.modal-content { background-color: #242424; margin: 8% auto; padding: 20px; border: 1px solid #444; border-radius: 12px; width: 90%; max-width: 550px; max-height: 75vh; display: flex; flex-direction: column; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 10px; }
+.modal-header h3 { margin: 0; color: #00ffaa; font-size: 18px; }
+.close-modal { color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer; line-height: 1; }
+.close-modal:hover { color: #fff; }
+.char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 12px; overflow-y: auto; padding-right: 5px; }
+.char-grid::-webkit-scrollbar { width: 8px; }
+.char-grid::-webkit-scrollbar-thumb { background-color: #444; border-radius: 4px; }
+.char-grid::-webkit-scrollbar-track { background: #1a1a1a; }
+.char-item { background: #1c1c1c; border: 2px solid #333; border-radius: 8px; padding: 10px 5px; text-align: center; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; }
+.char-item:hover { border-color: #00ffaa; background: #2a2a2a; transform: translateY(-2px); }
+.char-item img { width: 50px; height: 50px; border-radius: 50%; margin-bottom: 8px; object-fit: cover; background: #111; }
+.char-item span { display: block; font-size: 11px; color: #ddd; word-break: break-word; line-height: 1.2; }
+.char-preview { display: flex; align-items: center; gap: 12px; margin-bottom: 5px; padding: 12px; background: #1a1a1a; border: 1px dashed #555; border-radius: 8px; }
+.btn-clear { margin-left: auto; background: none; border: none; color: #f87171; cursor: pointer; font-size: 13px; font-weight: bold; padding: 5px; }
+.btn-clear:hover { text-decoration: underline; }
+
+/* スマホ対応：画面幅が狭い時は1カラム（縦並び）に自動で戻す */
+@media (max-width: 850px) {
+    .calc-wrapper { flex-direction: column; }
+    .calc-left, .calc-right { width: 100%; flex: none; }
+    .calc-right { min-height: auto; padding: 10px; background: transparent; border: none; }
+    .result-placeholder { padding: 30px 0; }
+}
+
+/* --- Lv15 強化カウンター用スタイル --- */
+.upgrade-counter-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; background: #1a1a1a; padding: 8px 12px; border-radius: 6px; border: 1px solid #333; }
+.upgrade-counter-item span { font-size: 14px; font-weight: bold; color: #eee; }
+.upgrade-counter-item select { width: 80px; padding: 6px; background: #111; color: #fff; border: 1px solid #555; border-radius: 4px; font-size: 14px; text-align: center; }

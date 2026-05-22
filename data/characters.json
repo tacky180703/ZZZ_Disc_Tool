@@ -1,0 +1,262 @@
+[
+    {
+        "id": "anby",
+        "name": "アンビー",
+        "image": "images/chars/anby.png"
+    },
+    {
+        "id": "nicole",
+        "name": "ニコ",
+        "image": "images/chars/nicole.png"
+    },
+    {
+        "id": "billy",
+        "name": "ビリー",
+        "image": "images/chars/billy.png"
+    },
+    {
+        "id": "nekomata",
+        "name": "猫又",
+        "image": "images/chars/nekomata.png"
+    },
+    {
+        "id": "corin",
+        "name": "カリン",
+        "image": "images/chars/corin.png"
+    },
+    {
+        "id": "lycaon",
+        "name": "ライカン",
+        "image": "images/chars/lycaon.png"
+    },
+    {
+        "id": "rina",
+        "name": "リナ",
+        "image": "images/chars/rina.png"
+    },
+    {
+        "id": "ellen",
+        "name": "エレン",
+        "image": "images/chars/ellen.png"
+    },
+    {
+        "id": "anton",
+        "name": "アンドー",
+        "image": "images/chars/anton.png"
+    },
+    {
+        "id": "ben",
+        "name": "ベン",
+        "image": "images/chars/ben.png"
+    },
+    {
+        "id": "koleda",
+        "name": "クレタ",
+        "image": "images/chars/koleda.png"
+    },
+    {
+        "id": "grace",
+        "name": "グレース",
+        "image": "images/chars/grace.png"
+    },
+    {
+        "id": "lucy",
+        "name": "ルーシー",
+        "image": "images/chars/lucy.png"
+    },
+    {
+        "id": "piper",
+        "name": "パイパー",
+        "image": "images/chars/piper.png"
+    },
+    {
+        "id": "caesar",
+        "name": "シーザー",
+        "image": "images/chars/caesar.png"
+    },
+    {
+        "id": "burnice",
+        "name": "バーニス",
+        "image": "images/chars/burnice.png"
+    },
+    {
+        "id": "lighter",
+        "name": "ライト",
+        "image": "images/chars/lighter.png"
+    },
+    {
+        "id": "pulchra",
+        "name": "プルクラ",
+        "image": "images/chars/pulchra.png"
+    },
+    {
+        "id": "soldier_11",
+        "name": "11号",
+        "image": "images/chars/soldier_11.png"
+    },
+    {
+        "id": "soldier_0",
+        "name": "0ビー",
+        "image": "images/chars/soldier_0.png"
+    },
+    {
+        "id": "trigger",
+        "name": "トリガー",
+        "image": "images/chars/trigger.png"
+    },
+    {
+        "id": "soukaku",
+        "name": "蒼角",
+        "image": "images/chars/soukaku.png"
+    },
+    {
+        "id": "miyabi",
+        "name": "雅",
+        "image": "images/chars/miyabi.png"
+    },
+    {
+        "id": "harumasa",
+        "name": "悠真",
+        "image": "images/chars/harumasa.png"
+    },
+    {
+        "id": "yanagi",
+        "name": "柳",
+        "image": "images/chars/yanagi.png"
+    },
+    {
+        "id": "zhu_yuan",
+        "name": "朱鳶",
+        "image": "images/chars/zhu_yuan.png"
+    },
+    {
+        "id": "qingyi",
+        "name": "青衣",
+        "image": "images/chars/qingyi.png"
+    },
+    {
+        "id": "seth",
+        "name": "セス",
+        "image": "images/chars/seth.png"
+    },
+    {
+        "id": "jane",
+        "name": "ジェーン",
+        "image": "images/chars/jane.png"
+    },
+    {
+        "id": "astra",
+        "name": "アストラ",
+        "image": "images/chars/astra.png"
+    },
+    {
+        "id": "evelyn",
+        "name": "イヴリン",
+        "image": "images/chars/evelyn.png"
+    },
+    {
+        "id": "vivian",
+        "name": "ビビアン",
+        "image": "images/chars/vivian.png"
+    },
+    {
+        "id": "hugo",
+        "name": "ヒューゴ",
+        "image": "images/chars/hugo.png"
+    },
+    {
+        "id": "yixuan",
+        "name": "儀玄",
+        "image": "images/chars/yixuan.png"
+    },
+    {
+        "id": "ju_fufu",
+        "name": "橘福福",
+        "image": "images/chars/ju_fufu.png"
+    },
+    {
+        "id": "pan_yinhu",
+        "name": "潘引壺",
+        "image": "images/chars/pan_yinhu.png"
+    },
+    {
+        "id": "yuzuha",
+        "name": "浮波柚葉",
+        "image": "images/chars/yuzuha.png"
+    },
+    {
+        "id": "alice",
+        "name": "アリス",
+        "image": "images/chars/alice.png"
+    },
+    {
+        "id": "seed",
+        "name": "「シード」",
+        "image": "images/chars/seed.png"
+    },
+    {
+        "id": "orphie",
+        "name": "オルペウス",
+        "image": "images/chars/orphie.png"
+    },
+    {
+        "id": "lucia",
+        "name": "リュシア",
+        "image": "images/chars/lucia.png"
+    },
+    {
+        "id": "idril",
+        "name": "イドリー",
+        "image": "images/chars/idril.png"
+    },
+    {
+        "id": "dialin",
+        "name": "ダイアリン",
+        "image": "images/chars/dialin.png"
+    },
+    {
+        "id": "bangaku",
+        "name": "盤岳",
+        "image": "images/chars/bangaku.png"
+    },
+    {
+        "id": "teru",
+        "name": "照",
+        "image": "images/chars/teru.png"
+    },
+    {
+        "id": "ye_shunguang",
+        "name": "葉瞬光",
+        "image": "images/chars/ye_shunguang.png"
+    },
+    {
+        "id": "chinatsu",
+        "name": "千夏",
+        "image": "images/chars/chinatsu.png"
+    },
+    {
+        "id": "aria",
+        "name": "アリア",
+        "image": "images/chars/aria.png"
+    },
+    {
+        "id": "nangong_yu",
+        "name": "南宮羽",
+        "image": "images/chars/nangong_yu.png"
+    },
+    {
+        "id": "cynthia",
+        "name": "シーシィア",
+        "image": "images/chars/cynthia.png"
+    },
+    {
+        "id": "promeia",
+        "name": "プロメイア",
+        "image": "images/chars/promeia.png"
+    },
+    {
+        "id": "komano_masato",
+        "name": "狛野真斗",
+        "image": "images/chars/komano_masato.png"
+    }
+]

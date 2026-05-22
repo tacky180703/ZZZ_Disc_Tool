@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ゼンゼロ 神ディスク厳選ツール</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="tab-menu">
+        <button class="tab-btn active" onclick="switchTab('calc')">ディスク判定</button>
+        <button class="tab-btn" onclick="switchTab('chars')">自分のキャラ設定</button>
+    </div>
+
+    <div id="tab-calc" class="tab-content active">
+        <h1>拾ったディスクを判定する</h1>
+        
+        <div class="calc-wrapper">
+            <div class="calc-left">
+                <div class="form-group" style="display:flex; justify-content:space-between; gap:10px; background: #2a2a2a; border-left: 4px solid #00ffaa; padding: 10px 15px;">
+                    <label style="margin:0; cursor:pointer; font-size:13px;">
+                        <input type="radio" name="evalMode" value="predict" checked onchange="renderUpgradeCounters()"> 🔮 強化見込み (Lv0〜14)
+                    </label>
+                    <label style="margin:0; cursor:pointer; font-size:13px;">
+                        <input type="radio" name="evalMode" value="finished" onchange="renderUpgradeCounters()"> 🏆 完成品評価 (Lv15)
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>① ディスクの種類（セット）</label>
+                    <select id="currentSet"></select>
+                </div>
+
+                <div class="form-group">
+                    <label>② 部位 と メインステータス</label>
+                    <div style="display: flex; gap: 10px;">
+                        <select id="discNum" onchange="updateMainStats()" style="width: 35%;">
+                            <option value="1">1番</option><option value="2">2番</option><option value="3">3番</option>
+                            <option value="4">4番</option><option value="5">5番</option><option value="6">6番</option>
+                        </select>
+                        <select id="mainStat" onchange="handleMainStatChange()" style="width: 65%;"></select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>③ 現在付いているサブステータス <span style="font-size:12px; color:#aaa; font-weight:normal;">(3つ か 4つ)</span></label>
+                    <div class="stat-grid" id="currentGrid"></div>
+                    
+                    <div id="finishedUpgradesArea" style="display: none; margin-top: 20px; border-top: 1px dashed #555; padding-top: 15px;">
+                        <label style="color:#ffd700;">④ 各ステータスの強化回数 <span style="font-size:12px; color:#aaa; font-weight:normal;">(横の + の数字)</span></label>
+                        <div id="upgradeCountersList"></div>
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculate()">誰に使えるか判定！</button>
+            </div>
+            
+            <div class="calc-right">
+                <div id="resultArea">
+                    <div class="result-placeholder">「誰に使えるか判定！」ボタンを押すと、<br>ここに結果カードが表示されます。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-chars" class="tab-content">
+        <h1>マイキャラクターの登録</h1>
+
+        <div class="form-group">
+            <label>キャラクターの選択</label>
+            <button type="button" id="openCharModalBtn" class="btn-select-char" onclick="openModal()">🔍 キャラを選択する</button>
+            
+            <input type="hidden" id="selectedBaseCharId" value="">
+            <input type="hidden" id="selectedBaseCharName" value="">
+            <input type="hidden" id="selectedBaseCharImage" value="">
+
+            <div id="selectedCharPreview" class="char-preview" style="display: none;">
+                <img id="previewCharImg" src="" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid #333;">
+                <div style="display: flex; flex-direction: column;">
+                    <span id="previewCharName" style="color: #00ffaa; font-weight: bold; font-size: 16px;"></span>
+                    <span id="previewStatusMsg" style="font-size: 12px; color: #aaa;"></span>
+                </div>
+                <button type="button" class="btn-clear" onclick="clearCharSelection()">✕ 選択解除</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-group-title">適正ディスクセット（複数選択可）</div>
+            <div class="stat-grid-3" id="charSetsGrid"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-group-title">理想のメインステータス設定</div>
+            <div class="note" style="margin-bottom:10px;">※選択しなかった部位は「メインステータス不問」として扱われます。</div>
+            
+            <label style="color:#00ffaa;">■ 4番ディスク</label>
+            <div class="stat-grid-3" id="charMain4Grid" style="margin-bottom: 15px;"></div>
+            
+            <label style="color:#00ffaa;">■ 5番ディスク</label>
+            <div class="stat-grid-3" id="charMain5Grid" style="margin-bottom: 15px;"></div>
+            
+            <label style="color:#00ffaa;">■ 6番ディスク</label>
+            <div class="stat-grid-3" id="charMain6Grid"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-group-title">理想のサブステータス設定</div>
+            <label>このキャラの狙いサブステータス <span style="font-size:12px; color:#aaa; font-weight:normal;">(最大4つ)</span></label>
+            <div class="stat-grid" id="charTargetGrid"></div>
+        </div>
+
+        <button class="btn-save" onclick="saveCharacter()">設定を保存する</button>
+
+        <h2 style="font-size: 16px; color: #00ffaa; margin-top: 30px; border-bottom: 1px solid #444; padding-bottom: 10px;">登録済みのマイキャラクター</h2>
+        <div id="charListArea"></div>
+        
+        <div id="charModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>キャラクターを選択</h3>
+                    <span class="close-modal" onclick="closeModal()">&times;</span>
+                </div>
+                <div class="char-grid" id="modalCharGrid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
