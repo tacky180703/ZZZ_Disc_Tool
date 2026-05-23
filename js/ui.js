@@ -273,7 +273,7 @@ export function renderMismatchCard(char, idealNames, container) {
     container.innerHTML += `<div class="char-card" style="border-left-color: #7f1d1d;"><div class="char-card-title"><div class="char-title-container">${imgHTML}<span>${char.name} 用の判定</span></div></div><div class="advice-box advice-trash-hard">【メイン不一致のため即分解推奨】<br><span style="font-size:12px; font-weight:normal;">理想のメインステータス: <strong>${idealNames}</strong></span></div></div>`;
 }
 
-export function renderPredictCard(char, validTargets, initial, currentHits, unacquiredTargets, exactProbs, container) {
+export function renderPredictCard(char, validTargets, initial, currentHits, unacquiredTargets, exactProbs, individualResults, container) {
     const totalTargets = validTargets.length;
     let advice = { class: "advice-trash-hard", text: "【即分解推奨】" };
 
@@ -300,7 +300,36 @@ export function renderPredictCard(char, validTargets, initial, currentHits, unac
     }
     if (!hasDisplayProb) html += `<div class="result-item"><span>強化される確率</span><span class="highlight">0.00%</span></div>`;
     let probZero = (exactProbs[0] * 100).toFixed(2);
-    html += `<div class="note">※1回も当たりに吸われない確率: ${probZero}%</div></div></div>`;
+    html += `<div class="note">※1回も当たりに吸われない確率: ${probZero}%</div></div>`;
+
+    if (validTargets.length > 0) {
+        html += `<div style="margin-top: 15px; font-weight: bold; font-size: 13px; color: #ffd700; border-bottom: 1px dashed #444; padding-bottom: 5px;">▼ ステータスごとの強化見込み</div>`;
+        html += `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-top: 10px;">`;
+        
+        individualResults.forEach(res => {
+            const statName = subStats.find(s => s.id === res.id)?.name || res.id;
+            html += `<div style="background: #1a1a1a; border: 1px solid #333; padding: 10px; border-radius: 6px;">`;
+            html += `<div style="color: #00ffaa; font-weight: bold; margin-bottom: 8px; font-size: 13px;">${statName} <span style="font-size:11px; color:#aaa; font-weight:normal;">${res.isAcquired ? '(付与済)' : '(未付与)'}</span></div>`;
+            
+            if (res.miss > 0) {
+                html += `<div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;"><span>付かない</span><span style="color:#888;">${(res.miss * 100).toFixed(2)}%</span></div>`;
+            }
+            
+            let maxK = initial === 4 ? 5 : 4;
+            for (let k = 0; k <= maxK; k++) {
+                let probStr = (res.probs[k] * 100).toFixed(2);
+                if (parseFloat(probStr) > 0 || k === 0) {
+                    let label = res.isAcquired ? `+${k}` : `付いて +${k}`;
+                    let color = k >= 2 ? "#ffd700" : (k === 1 ? "#fff" : "#aaa");
+                    html += `<div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;"><span>${label}</span><span style="color:${color};">${probStr}%</span></div>`;
+                }
+            }
+            html += `</div>`;
+        });
+        html += `</div>`;
+    }
+
+    html += `</div>`;
     container.innerHTML += html;
 }
 

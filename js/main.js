@@ -1,5 +1,5 @@
 import { discMainStats } from './constants.js';
-import { calculateProbabilities } from './calc.js';
+import { calculateProbabilities, calculateIndividualProbabilities } from './calc.js';
 import * as ui from './ui.js';
 
 async function loadData() {
@@ -83,7 +83,14 @@ function calculate() {
             let unacquiredTargets = 0; validTargets.forEach(t => { if (!ui.state.selectedCurrents.includes(t)) unacquiredTargets++; });
 
             const exactProbs = calculateProbabilities(initialSlots, currentHits, unacquiredTargets, totalPoolSize);
-            ui.renderPredictCard(char, validTargets, initialSlots, currentHits, unacquiredTargets, exactProbs, resultArea);
+            
+            const individualResults = validTargets.map(t => {
+                const isAcquired = ui.state.selectedCurrents.includes(t);
+                const res = calculateIndividualProbabilities(isAcquired, initialSlots, totalPoolSize);
+                return { id: t, isAcquired, ...res };
+            });
+
+            ui.renderPredictCard(char, validTargets, initialSlots, currentHits, unacquiredTargets, exactProbs, individualResults, resultArea);
         }
     });
 }

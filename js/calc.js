@@ -30,3 +30,30 @@ export function calculateProbabilities(initialSlots, currentHits, unacquiredTarg
     }
     return exactProbs;
 }
+
+export function calculateIndividualProbabilities(isAcquired, initialSlots, totalPoolSize) {
+    let result = {
+        miss: 0,
+        probs: [0, 0, 0, 0, 0, 0]
+    };
+
+    if (initialSlots === 4) {
+        if (isAcquired) {
+            for (let k = 0; k <= 5; k++) result.probs[k] = binomialProbability(5, k, 0.25);
+        } else {
+            result.miss = 1.0;
+        }
+    } else { // initialSlots === 3
+        if (isAcquired) {
+            for (let k = 0; k <= 4; k++) result.probs[k] = binomialProbability(4, k, 0.25);
+        } else {
+            const remainingPoolSize = totalPoolSize - 3;
+            const p_revealHit = remainingPoolSize > 0 ? (1.0 / remainingPoolSize) : 0;
+            result.miss = 1.0 - p_revealHit;
+            for (let k = 0; k <= 4; k++) {
+                result.probs[k] = p_revealHit * binomialProbability(4, k, 0.25);
+            }
+        }
+    }
+    return result;
+}
